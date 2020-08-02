@@ -45,7 +45,7 @@ Below are the wireframes for Desktop, Tablet, and Mobile
 
 ## Time/Priority Matrix 
 
-You can check out my `Time and Priority` Matix [here](https://res.cloudinary.com/rosefc/image/upload/v1594621043/Screen_Shot_2020-07-13_at_2.17.31_AM_js7xkz.png)
+You can check out my `Time and Priority` Matrix [here](https://res.cloudinary.com/rosefc/image/upload/v1594621043/Screen_Shot_2020-07-13_at_2.17.31_AM_js7xkz.png)
 
 ### MVP/PostMVP - 5min
 
