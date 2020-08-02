@@ -45,12 +45,12 @@ Other inspiration will come from T-mobiles client management system since I work
 
 NEEDS TO BE WORKED ON
 
-Wireframes were done using [Mockflow](https://mockflow.com/app/#Wireframe).
+Wireframes were done using [figma](https://www.figma.com/).
 Below are the wireframes for Desktop, Tablet, and Mobile
 
-- [Mobile](https://res.cloudinary.com/rosefc/image/upload/v1594615521/mobile_website_mockups_copy_ehoriv.png)
-- [Tablet](https://res.cloudinary.com/rosefc/image/upload/v1594615521/Mobile_Tablet_website_mockup_coo4vj.png)
-- [Desktop](https://res.cloudinary.com/rosefc/image/upload/v1594615521/Desktop_website_mockup_ceqnaf.png)
+- [Mobile](https://res.cloudinary.com/rosefc/image/upload/v1596396466/project%202/projectTwoMobileWireframe.png)
+- [Tablet](https://res.cloudinary.com/rosefc/image/upload/v1596396466/project%202/projectTwoTabletWireframe.png)
+- [Desktop](https://res.cloudinary.com/rosefc/image/upload/v1596396467/project%202/projectTwoWebWireframe.png)
 
 ## Time/Priority Matrix 
 
@@ -79,6 +79,7 @@ The functionality will then be divided into two separate lists: MPV and PostMVP.
    * Animations for expanding student info in tablet and mobile layout
 
 * when student is past due, highlight red
+* order by name, age, rank, due date
 
 
 ## Functional Components
