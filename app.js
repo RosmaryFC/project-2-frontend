@@ -11,9 +11,6 @@ const $btnStudent = $('#student')
 const $btnGuardian = $('#guardian')
 const $table = $('.table-list-studentguardian');
 
-
-
-
 //////////////////////////////
 //FUNCTIONS
 /////////////////////////////
@@ -184,9 +181,7 @@ function createDropdownMenu (userObject) {
         $aDelete.on('click', (event) => {
             console.log('delete')
             console.log('id:', userObject);
-            //TODO: in order to delete object, you must determine document type (student or guardian) then pass in id and type to deleteUser function
             deleteUser(userObject);
-
         })
 
         $divOptions.append($aEdit);
@@ -195,19 +190,11 @@ function createDropdownMenu (userObject) {
     return $liDropdown;
 }
 
-function deleteUser(userObject) {
+async function deleteUser(userObject) {
     //TODO: write logic for delete user
     console.log('logic for delete user goes here')
     console.log('userObject in delete: ', userObject)
-    const objectType = (userObject) => {
-        // try{
-        //     if(userObject.hasOwnProperty('students')){
-        //         console.log('This is a guardian')
-        //     }
-        // }catch(error){
-        //     console.log('This is a student')
-        //     console.log('error',error)
-        // }
+    const route = (userObject) => {
         if (userObject.hasOwnProperty('students') ){
             console.log('This is a guardian')
             return "/guardians"
@@ -216,9 +203,22 @@ function deleteUser(userObject) {
             return "/students"
         }
     }
-
+    const userId = userObject._id;
+    console.log('id', userId);
     
-    objectType(userObject);
+    const userURI = `${URL}${route(userObject)}/${userId}`;
+    console.log('userURI',userURI)
+    //API CALL USING ASYNC/AWAIT
+    const response = await fetch(`${URL}${route(userObject)}/${userId}`, {
+        method: "delete"
+    })
+    console.log('deleted data', response);
+    $table.empty()
+    if(route == '/guardians') {
+        populateGuardianTable()
+    }else {
+        populateStudentTable()
+    }
 }
 
 function editUser(userObject) {
