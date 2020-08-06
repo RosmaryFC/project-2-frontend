@@ -1,7 +1,7 @@
 ///////////////////////
 //SETS URL SO IT USES DEPLOYED API URL IF IT EXISTS, LOCALHOST IF IT DOESN'T
 //TODO: update deployed URL
-const deployedURL = null;
+const deployedURL = "https://project-2-backend.herokuapp.com/";
 const URL = deployedURL ? deployedURL : "http://localhost:3000";
 
 ///////////////////////
@@ -190,16 +190,23 @@ function createDropdownMenu (userObject) {
     return $liDropdown;
 }
 
+//deletes either student or guardian
+//TODO: REMOVE REFERNCE ID FROM ACTIVE STUDENT OR GUARDIAN!!
 async function deleteUser(userObject) {
-    //TODO: write logic for delete user
     console.log('logic for delete user goes here')
     console.log('userObject in delete: ', userObject)
     const route = (userObject) => {
         if (userObject.hasOwnProperty('students') ){
             console.log('This is a guardian')
+            const route = "/guardians";
+            const studentsArr = ""
+            //get route
+            //get studentsArr
             return "/guardians"
         }else {
             console.log('This is a student')
+            //get route
+            //get guardiansArr
             return "/students"
         }
     }
@@ -207,12 +214,16 @@ async function deleteUser(userObject) {
     console.log('id', userId);
     
     const userURI = `${URL}${route(userObject)}/${userId}`;
+    // const userreferenceArr = 
     console.log('userURI',userURI)
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}${route(userObject)}/${userId}`, {
         method: "delete"
     })
     console.log('deleted data', response);
+    
+    //with userid, 
+
     $table.empty()
     if(route == '/guardians') {
         populateGuardianTable()
