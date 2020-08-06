@@ -27,7 +27,7 @@ const populateStudentTable = async () => {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
-            'origin': 'x-requested-with'
+            'x-requested-with': ''
         }
     });
     const data = await response.json();
