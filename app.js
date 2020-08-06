@@ -20,8 +20,10 @@ const populateStudentTable = async () => {
     //empties table before populating
     $table.empty()
 
+    const anywhereHeroku = "https://cors-anywhere.herokuapp.com/https://joke-api-strict-cors.appspot.com/jokes/random"
+
     //API CALL USING ASYNC/AWAIT
-    const response = await fetch(`${URL}/students`, {
+    const response = await fetch(`${anywhereHeroku}/${URL}/students`, {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
