@@ -202,22 +202,22 @@ async function deleteUser(userObject) {
             const studentsArr = ""
             //get route
             //get studentsArr
-            return "/guardians"
+            return "guardians"
         }else {
             console.log('This is a student')
             //get route
             //get guardiansArr
-            return "/students"
+            return "students"
         }
     }
     const userId = userObject._id;
     console.log('id', userId);
     
-    const userURI = `${URL}${route(userObject)}/${userId}`;
+    const userURI = `${URL}/${route(userObject)}/${userId}`;
     // const userreferenceArr = 
     console.log('userURI',userURI)
     //API CALL USING ASYNC/AWAIT
-    const response = await fetch(`${URL}${route(userObject)}/${userId}`, {
+    const response = await fetch(`${URL}/${route(userObject)}/${userId}`, {
         method: "delete"
     })
     console.log('deleted data', response);
@@ -225,7 +225,7 @@ async function deleteUser(userObject) {
     //with userid, 
 
     $table.empty()
-    if(route == '/guardians') {
+    if(route == 'guardians') {
         populateGuardianTable()
     }else {
         populateStudentTable()
@@ -247,7 +247,7 @@ function editUser(userObject) {
 //when app is opened up - student radio button is automatically selected and looks active
 //guardian button will look disabled
 //student get all function is called to display all students in a table
-populateStudentTable();
+//populateStudentTable();
 
 //when guardian button is selected, table disappears and guardian info is displayed in a table
 //student button looks disabled and guardian button is active
