@@ -22,6 +22,7 @@ const populateStudentTable = async () => {
 
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}/students`, {
+        method: 'get',
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
