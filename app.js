@@ -1,7 +1,7 @@
 ///////////////////////
 //SETS URL SO IT USES DEPLOYED API URL IF IT EXISTS, LOCALHOST IF IT DOESN'T
 //TODO: update deployed URL
-const deployedURL = "https://project-2-backend.herokuapp.com/";
+const deployedURL = "https://project-2-backend.herokuapp.com";
 const URL = deployedURL ? deployedURL : "http://localhost:3000";
 
 ///////////////////////
