@@ -1,0 +1,6 @@
+<form action="/action_page.php">
+    <input type="radio" id="student" name="user" value="student">
+    <label for="student">Students</label>
+        <input type="radio" id="guardian" name="user" value="guardian">
+    <label for="guardian">Parents</label>
+</form>
