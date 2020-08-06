@@ -23,7 +23,7 @@ const populateStudentTable = async () => {
     const anywhereHeroku = "https://cors-anywhere.herokuapp.com"
 
     //API CALL USING ASYNC/AWAIT
-    const response = await fetch(`${anywhereHeroku}/${URL}/students`, {
+    const response = await fetch(`${URL}/students`, {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
