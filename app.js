@@ -247,7 +247,7 @@ function editUser(userObject) {
 //when app is opened up - student radio button is automatically selected and looks active
 //guardian button will look disabled
 //student get all function is called to display all students in a table
-//populateStudentTable();
+populateStudentTable();
 
 //when guardian button is selected, table disappears and guardian info is displayed in a table
 //student button looks disabled and guardian button is active
