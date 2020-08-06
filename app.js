@@ -21,7 +21,12 @@ const populateStudentTable = async () => {
     $table.empty()
 
     //API CALL USING ASYNC/AWAIT
-    const response = await fetch(`${URL}/students`);
+    const response = await fetch(`${URL}/students`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        }
+    });
     const data = await response.json();
     console.log('data: ',data);
     
@@ -59,10 +64,10 @@ const populateStudentTable = async () => {
         const $ulEntry = $('<ul>')
         $liEntry.append($ulEntry)
 
-        //append a menu from bootstrap with edit button and delete button
-        const $liDropdown = createDropdownMenu(student);
-        //append menu to ulEntry
-        $ulEntry.append($liDropdown); 
+        // //append a menu from bootstrap with edit button and delete button
+        // const $liDropdown = createDropdownMenu(student);
+        // //append menu to ulEntry
+        // $ulEntry.append($liDropdown); 
 
         const $liNameEntry = $('<li>').text(student.firstName);
         const $liAgeEntry = $('<li>').text(getAge(student.dateOfBirth));
