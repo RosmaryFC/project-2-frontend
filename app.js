@@ -1,26 +1,25 @@
 ///////////////////////
 //SETS URL SO IT USES DEPLOYED API URL IF IT EXISTS, LOCALHOST IF IT DOESN'T
-//TODO: update deployed URL
 const deployedURL = "https://project-2-backend.herokuapp.com";
 const URL = deployedURL ? deployedURL : "http://localhost:3000";
 
 ///////////////////////
 //GLOBAL VARIABLES
 //////////////////////
-const $btnStudent = $('#student')
-const $btnGuardian = $('#guardian')
+const $btnStudent = $('#btn-students');
+const $btnGuardian = $('#btn-guardians');
 const $table = $('.table-list-studentguardian');
+
+const $btnCreateStudentSave = $('#btn-student-create-save');
+const $btnCreateGuardianSave = $('#btn-parent-create-save');
 
 //////////////////////////////
 //FUNCTIONS
 /////////////////////////////
 
-
 const populateStudentTable = async () => {
     //empties table before populating
     $table.empty()
-
-    const anywhereHeroku = "https://cors-anywhere.herokuapp.com"
 
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}/students`, {
@@ -72,7 +71,7 @@ const populateStudentTable = async () => {
         //append menu to ulEntry
         $ulEntry.append($liDropdown); 
 
-        const $liNameEntry = $('<li>').text(student.firstName);
+        const $liNameEntry = $('<li>').text(`${student.firstName} ${student.lastName}`);
         const $liAgeEntry = $('<li>').text(getAge(student.dateOfBirth));
         const $liRankEntry = $('<li>').text(student.rank);
         const $liMonthlyFeeEntry = $('<li>').text(student.billing.monthlyFee);
@@ -138,7 +137,7 @@ const populateGuardianTable = async () => {
         $ulEntry.append($liDropdown);        
         
 
-        const $liNameEntry = $('<li>').text(`${guardian.firstName} + ${guardian.lastName}`);
+        const $liNameEntry = $('<li>').text(`${guardian.firstName} ${guardian.lastName}`);
         const $liNumberEntry = $('<li>').text(getAge(guardian.contactInfo.phoneNumber));
         const $liEmailEntry = $('<li>').text(guardian.contactInfo.email);
         const $liAddressEntry = $('<li>').text(guardian.contactInfo.address);
@@ -178,14 +177,18 @@ function createDropdownMenu (userObject) {
         const $aEdit = $('<a>').attr('class',"dropdown-item");
         $aEdit.attr('href',"#");
         $aEdit.text("Edit");
+        //on Click to edit each item
         $aEdit.on('click', (event) => {
             console.log('edit')
             console.log('id:' ,userObject);
+            editUser(userObject)
         })
 
+        //create items and set on clicks
         const $aDelete = $('<a>').attr('class',"dropdown-item");
         $aDelete.attr('href',"#");
         $aDelete.text('Delete');
+        //On Click to delete each item
         $aDelete.on('click', (event) => {
             console.log('delete')
             console.log('id:', userObject);
@@ -199,39 +202,26 @@ function createDropdownMenu (userObject) {
 }
 
 //deletes either student or guardian
-//TODO: REMOVE REFERNCE ID FROM ACTIVE STUDENT OR GUARDIAN!!
 async function deleteUser(userObject) {
-    console.log('logic for delete user goes here')
-    console.log('userObject in delete: ', userObject)
+    //checks whether student or guardian
     const route = (userObject) => {
         if (userObject.hasOwnProperty('students') ){
-            console.log('This is a guardian')
-            const route = "/guardians";
-            const studentsArr = ""
-            //get route
-            //get studentsArr
             return "guardians"
         }else {
-            console.log('This is a student')
-            //get route
-            //get guardiansArr
             return "students"
         }
     }
+
+    //delete from database
     const userId = userObject._id;
-    console.log('id', userId);
-    
     const userURI = `${URL}/${route(userObject)}/${userId}`;
-    // const userreferenceArr = 
     console.log('userURI',userURI)
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}/${route(userObject)}/${userId}`, {
         method: "delete"
     })
-    console.log('deleted data', response);
     
-    //with userid, 
-
+    //repopulates student or guardian table
     $table.empty()
     if(route == 'guardians') {
         populateGuardianTable()
@@ -240,11 +230,125 @@ async function deleteUser(userObject) {
     }
 }
 
+//TODO: write logic for edit user
 function editUser(userObject) {
-    //TODO: write logic for edit user
-    console.log('logic for edit student goes here')
+    // console.log('userObject in edit: ', userObject)
+
+    // //checks whether student or guardian
+    // const route = (userObject) => {
+    //     if (userObject.hasOwnProperty('students') ){
+    //         return "guardians"
+    //     }else {
+    //         return "students"
+    //     }
+    // }
+
+    // const updatedUser;
+    // if(route == students){
+    //     updatedUser=updateStudent(userObject)
+    // }else {
+    //     updatedUser = updateGuardian(userObject)
+    // }
+
+    // //edit in database
+    // const userId = userObject._id;
+    // const userURI = `${URL}/${route(userObject)}/${userId}`;
+    // console.log('userURI',userURI)
+    // //API CALL USING ASYNC/AWAIT
+    // const response = await fetch(`${URL}/${route(userObject)}/${userId}`, {
+    //     method: "put",
+    //     headers: {
+    //         "Content-Type":"application/json"
+    //     },
+    //     body: JSON.stringify(updatedUser)
+    // })
+
+    // //TODO: write logic for edit user
+    // console.log('logic for edit student goes here')
+
+    // //repopulates student or guardian table
+    // $table.empty()
+    // if(route == 'guardians') {
+    //     populateGuardianTable()
+    // }else {
+    //     populateStudentTable()
+    // }
 }
 
+//TODO: write logic for update student
+function updateStudent(userObject) {
+
+}
+
+//TODO: write logic for update guardian
+function updateGuardian(userObject) {
+
+}
+
+//TODO: write logic for create student 
+async function createStudent() {
+    //bring in variables from form
+    const $firstName = $('#student-firstName');
+    const $lastName = $('#student-lastName');
+    const $dateOfBirth =$('#student-dateOfBirth');
+    const $rank = $('#student-rank');
+    const $phoneNumber = $('#student-PhoneNumber');
+    const $email = $('#student-email');
+    const $address = $('#student-address');
+    const $plan = $('#student-plan');
+    const today = new Date()
+    const startDate = (today.getMonth()+1)+'/'+today.getDate()+ '/' + today.getFullYear();
+    const renewalDate1yr =  (today.getMonth()+1)+'/'+today.getDate()+ '/' + (today.getFullYear() + 1);
+    const renewealDate6mth = (today.getMonth()+1 + 6)+'/'+today.getDate()+ '/' + today.getFullYear();
+    const renewealDate1mth = (today.getMonth()+1 + 1)+'/'+today.getDate()+ '/' + today.getFullYear();
+    const monthlyfee1yr = 75;
+    const monthlyfee6mth = 85;
+    const monthlyfee1mth = 90;
+
+    //create student object
+    const newStudent = {
+        firstName: $firstName.val(),
+        lastName: $lastName.val(),
+        dateOfBirth: $dateOfBirth.val(),
+        rank: $rank.val(),
+        contactInfo: {
+            phoneNumber: $phoneNumber.val(),
+            email: $email.val(),
+            address: $address.val(),
+        },
+        billing: {
+            plan: Number($plan.val()),
+            startDate: startDate,
+            renewalDate: renewalDate1yr,
+            monthlyDueDate: today.getDate() ,
+            monthlyFee: monthlyfee1yr ,
+            pastDueBalance: 0 ,
+            currentBalance: 0 ,
+        }
+    }
+    console.log('NEW STUDENT: ', newStudent);
+
+    //API CALL USING ASYNC/AWAIT
+    const response = await fetch(`${URL}/students`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newStudent)
+    });
+
+    //repopulate table
+    $table.empty()
+    populateStudentTable();
+
+    const $modal = $('createStudentModal');
+    $modal.close()
+}
+
+//TODO: write logic for edit user
+function createGuardian() {
+
+}
 
 
 ////////////////////////////////
@@ -260,8 +364,18 @@ populateStudentTable();
 //when guardian button is selected, table disappears and guardian info is displayed in a table
 //student button looks disabled and guardian button is active
 $btnGuardian.on('click', (event) => {
+    console.log('clicked guardian');
     populateGuardianTable();
 });
 $btnStudent.on('click', (event) => {
+    console.log('clicked student');
     populateStudentTable();
 });
+
+$btnCreateStudentSave.on('click', (event) => {
+    createStudent();
+})
+
+$btnCreateGuardianSave.on('click', (event) => {
+    createGuardian();
+})

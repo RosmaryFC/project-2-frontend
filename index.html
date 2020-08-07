@@ -21,16 +21,103 @@
         </header>
         <section class="bar-studentguardian">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary" id="student">Students</button>
-                <button type="button" class="btn btn-secondary" id="guardian">Guardians</button>
+                <button type="button" class="btn btn-secondary" id="btn-students">Students</button>
+                <button type="button" class="btn btn-secondary" id="btn-guardian">Guardians</button>
               </div>
 
             <label for="search-user">Search: </label>
             <input id="search-user" type="text"/>
             <!--TODO: might want to add a search button or have when user presses enter to search-->
 
-            <button class="btn btn-primary" id="create-user" type="submit">Create User</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" id="btn-student-create" data-toggle="modal" data-target="#createStudentModal">
+                Create Student
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="guardianModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="studentModalLabel">New Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body" id="modal-student-body">
+                        <form action="">
+                            <label for="student-firstName">First name:</label>
+                            <input type="text" id="student-firstName" name="student-firstName"><br><br>
+                            <label for="student-lastName">Last name:</label>
+                            <input type="text" id="student-lastName" name="student-lastName"><br><br>
+                            <label for="student-dateOfBirth">Date Of Birth</label>
+                            <input type="text" id="student-dateOfBirth" name="student-dateOfBirth" placeholder="MM/DD/YYYY"><br><br>
+                            <label for="student-rank">Rank</label>
+                            <input type="text" id="student-rank" name="student-rank"><br><br>
+                            <h5>ContactInfo</h5>
+                            <label for="student-PhoneNumber">PhoneNumber</label>
+                            <input type="text" id="student-PhoneNumber" name="student-PhoneNumber"><br><br>
+                            <label for="student-email">Email</label>
+                            <input type="text" id="student-email" name="student-email"><br><br>
+                            <label for="student-address">address</label>
+                            <input type="text" id="student-address" name="student-address"><br><br>
+                            <h5>Billing</h5>
+                            <label for="student-plan">Plan</label>
+                            <input type="text" id="student-plan" name="student-plan"><br><br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn-student-create-save">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
 
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" id="btn-parent-create" data-toggle="modal" data-target="#guardianModal">
+                Create Guardian
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="guardianModal" tabindex="-1" aria-labelledby="guardianModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="guardianModalLabel">New Guardian</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <label for="guardian-firstName">First name:</label>
+                            <input type="text" id="guardian-firstName" name="guardian-firstName"><br><br>
+                            <label for="guardian-lastName">Last name:</label>
+                            <input type="text" id="guardian-lastName" name="guardian-lastName"><br><br>
+                            <h5>ContactInfo</h5>
+                            <label for="guardian-PhoneNumber">PhoneNumber</label>
+                            <input type="text" id="guardian-PhoneNumber" name="guardian-PhoneNumber"><br><br>
+                            <label for="guardian-email">Email</label>
+                            <input type="text" id="guardian-email" name="guardian-email"><br><br>
+                            <label for="guardian-address">address</label>
+                            <input type="text" id="guardian-address" name="guardian-address"><br><br>
+                            <!--Student Selector-->
+                            <form action="">
+                                <label for="students"><h5>Select Student</h5></label>
+                                <select name="students" id="students">
+                                    <!--Auto populate in JS-->
+                                </select>
+                            </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn-guardian-create-save">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
         </section>
         <section class="table-list-studentguardian">
             
