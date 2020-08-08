@@ -90,7 +90,6 @@ function getAge (dateOfBirth) {
     return dateOfBirth;
 }
 
-
 const populateGuardianTable = async () => {
     //empties table before populating
     $table.empty()
@@ -232,24 +231,27 @@ async function deleteUser(userObject) {
 }
 
 //TODO: write logic for edit user
-function editUser(userObject) {
-    // console.log('userObject in edit: ', userObject)
+async function editUser(userObject) {
+    console.log('userObject in edit: ', userObject)
 
-    // //checks whether student or guardian
-    // const route = (userObject) => {
-    //     if (userObject.hasOwnProperty('students') ){
-    //         return "guardians"
-    //     }else {
-    //         return "students"
-    //     }
-    // }
+    //checks whether student or guardian
+    const route = (userObject) => {
+        if (userObject.hasOwnProperty('students') ){
+            return "guardians"
+        }else {
+            return "students"
+        }
+    }
 
-    // const updatedUser;
-    // if(route == students){
-    //     updatedUser=updateStudent(userObject)
-    // }else {
-    //     updatedUser = updateGuardian(userObject)
-    // }
+    const updatedUser = () => {
+        if(route == 'students'){
+            return updateStudent(userObject)
+        }else {
+            return updateGuardian(userObject)
+        }
+    }
+
+    console.log(updatedUser)
 
     // //edit in database
     // const userId = userObject._id;
@@ -264,8 +266,6 @@ function editUser(userObject) {
     //     body: JSON.stringify(updatedUser)
     // })
 
-    // //TODO: write logic for edit user
-    // console.log('logic for edit student goes here')
 
     // //repopulates student or guardian table
     // $table.empty()
@@ -278,21 +278,36 @@ function editUser(userObject) {
 
 //TODO: write logic for update student
 function updateStudent(userObject) {
-
+    //TODO: write logic for edit user
+    console.log('logic for edit student goes here')
 }
 
 //TODO: write logic for update guardian
 function updateGuardian(userObject) {
+    console.log('logic for edit guardian goes here')
 
 }
 
 //TODO: write logic for create student 
 async function createStudent() {
-    //bring in variables from guardianconst today = new Date()
+    //bring in variables from form
+    const $firstName = $('#student-firstName');
+    const $lastName = $('#student-lastName');
+    const $dateOfBirth =$('#student-dateOfBirth');
+    const $rank = $('#student-rank');
+    const $phoneNumber = $('#student-PhoneNumber');
+    const $email = $('#student-email');
+    const $address = $('#student-address');
+    //TODO: make plan options radio buttons
+    const $plan = $('#student-plan');
+    const today = new Date()
+    //TODO: parse date to MM/DD/YYYY format
     const startDate = (today.getMonth()+1)+'/'+today.getDate()+ '/' + today.getFullYear();
+    //TODO: make renewal automatically based on plan selected
     const renewalDate1yr =  (today.getMonth()+1)+'/'+today.getDate()+ '/' + (today.getFullYear() + 1);
     const renewealDate6mth = (today.getMonth()+1 + 6)+'/'+today.getDate()+ '/' + today.getFullYear();
     const renewealDate1mth = (today.getMonth()+1 + 1)+'/'+today.getDate()+ '/' + today.getFullYear();
+    //TODO: make monthly fee automatcially base on plan selected
     const monthlyfee1yr = 75;
     const monthlyfee6mth = 85;
     const monthlyfee1mth = 90;
@@ -338,27 +353,6 @@ async function createStudent() {
     $modal.close()
 }
 
-// async function populateSelections() {
-//     const $students = $('#guardian-students');
-
-//     const allStudents = await fetch(`${URL}/students`, {
-//         method:"get",
-//         headers: {
-//             "Content-Type": "application/json"
-//         }
-//     })
-
-//     allStudents.forEach(student => {
-//         const $option = $('<option>').attr(`${student.firstName} ${student.lastName}`)
-//         $option.attr('id',`${student._id}`)
-//         $option.val(`${student.firstName} ${student.lastName}`)
-//         console.log('option value: ', $option.val())
-//         console.log('option id', $option.attr('id'))
-//         $students.append($option);
-//     })
-// }
-
-//TODO: write logic for edit user
 
 async function createGuardian() {
     const $firstName = $('#guardian-firstName');
@@ -436,11 +430,6 @@ $btnStudent.on('click', (event) => {
 $btnCreateStudentSave.on('click', (event) => {
     createStudent();
 })
-
-// $btnSelectGuardianModal.on('click',(event) => {
-//     console.log("CLICKED GUARDIAN MODAL")
-//     populateSelections();
-// })
 
 $btnCreateGuardianSave.on('click', (event) => {
     console.log('clicked createGuardian');
