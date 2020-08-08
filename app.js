@@ -11,7 +11,8 @@ const $btnGuardian = $('#btn-guardians');
 const $table = $('.table-list-studentguardian');
 
 const $btnCreateStudentSave = $('#btn-student-create-save');
-const $btnCreateGuardianSave = $('#btn-parent-create-save');
+const $btnCreateGuardianSave = $('#btn-guardian-create-save');
+const $btnSelectGuardianModal = $('#guardianModal');
 
 //////////////////////////////
 //FUNCTIONS
@@ -287,16 +288,7 @@ function updateGuardian(userObject) {
 
 //TODO: write logic for create student 
 async function createStudent() {
-    //bring in variables from form
-    const $firstName = $('#student-firstName');
-    const $lastName = $('#student-lastName');
-    const $dateOfBirth =$('#student-dateOfBirth');
-    const $rank = $('#student-rank');
-    const $phoneNumber = $('#student-PhoneNumber');
-    const $email = $('#student-email');
-    const $address = $('#student-address');
-    const $plan = $('#student-plan');
-    const today = new Date()
+    //bring in variables from guardianconst today = new Date()
     const startDate = (today.getMonth()+1)+'/'+today.getDate()+ '/' + today.getFullYear();
     const renewalDate1yr =  (today.getMonth()+1)+'/'+today.getDate()+ '/' + (today.getFullYear() + 1);
     const renewealDate6mth = (today.getMonth()+1 + 6)+'/'+today.getDate()+ '/' + today.getFullYear();
@@ -341,13 +333,82 @@ async function createStudent() {
     $table.empty()
     populateStudentTable();
 
+    //TODO: figure out how to close modal
     const $modal = $('createStudentModal');
     $modal.close()
 }
 
-//TODO: write logic for edit user
-function createGuardian() {
+// async function populateSelections() {
+//     const $students = $('#guardian-students');
 
+//     const allStudents = await fetch(`${URL}/students`, {
+//         method:"get",
+//         headers: {
+//             "Content-Type": "application/json"
+//         }
+//     })
+
+//     allStudents.forEach(student => {
+//         const $option = $('<option>').attr(`${student.firstName} ${student.lastName}`)
+//         $option.attr('id',`${student._id}`)
+//         $option.val(`${student.firstName} ${student.lastName}`)
+//         console.log('option value: ', $option.val())
+//         console.log('option id', $option.attr('id'))
+//         $students.append($option);
+//     })
+// }
+
+//TODO: write logic for edit user
+
+async function createGuardian() {
+    const $firstName = $('#guardian-firstName');
+    const $lastName = $('#guardian-lastName');
+    const $phoneNumber = $('#guardian-PhoneNumber');
+    const $email = $('#guardian-email');
+    const $address = $('#guardian-address');
+    const $student1 = $('#guardian-student1');
+    const $student2 = $('#guardian-student2');
+    const $student3 = $('#guardian-student3');
+    const studentsInputs = [$student1.val(), $student2.val(),$student3.val()];
+
+
+    //create guardian object
+    const newGuardian = {
+        firstName: $firstName.val(),
+        lastName: $lastName.val(),
+        contactInfo: {
+            phoneNumber: $phoneNumber.val(),
+            email: $email.val(),
+            address: $address.val(),
+        },
+        students: []
+    }
+//TODO: if student does not exist, create error popup and state student does not exist
+//TODO: make sure students inputed are lowercase
+    for(let i = 0; i < studentsInputs.length; i++){
+        if(studentsInputs[i] != ''){
+            console.log('push student to object')
+            newGuardian.students.push(studentsInputs[i]);
+        }
+    }
+
+    console.log('NEW Guardain: ', newGuardian);
+
+    //API CALL USING ASYNC/AWAIT
+    const response = await fetch(`${URL}/guardians`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newGuardian)
+    });
+
+    //repopulate table
+    $table.empty()
+    populateGuardianTable();
+
+    // const $modal = $('createStudentModal');
+    // $modal.close()
 }
 
 
@@ -376,6 +437,12 @@ $btnCreateStudentSave.on('click', (event) => {
     createStudent();
 })
 
+// $btnSelectGuardianModal.on('click',(event) => {
+//     console.log("CLICKED GUARDIAN MODAL")
+//     populateSelections();
+// })
+
 $btnCreateGuardianSave.on('click', (event) => {
+    console.log('clicked createGuardian');
     createGuardian();
 })

@@ -22,7 +22,7 @@
         <section class="bar-studentguardian">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-secondary" id="btn-students">Students</button>
-                <button type="button" class="btn btn-secondary" id="btn-guardian">Guardians</button>
+                <button type="button" class="btn btn-secondary" id="btn-guardians">Guardians</button>
               </div>
 
             <label for="search-user">Search: </label>
@@ -103,13 +103,14 @@
                             <input type="text" id="guardian-email" name="guardian-email"><br><br>
                             <label for="guardian-address">address</label>
                             <input type="text" id="guardian-address" name="guardian-address"><br><br>
-                            <!--Student Selector-->
-                            <form action="">
-                                <label for="students"><h5>Select Student</h5></label>
-                                <select name="students" id="students">
-                                    <!--Auto populate in JS-->
-                                </select>
-                            </form>
+                            <h5>Add Child</h5>
+                            <label for="guardian-student1">Name</label>
+                            <input type="text" id="guardian-student1" name="guardian-student1" placeholder="required"><br><br>
+                            <label for="guardian-student2">Name</label>
+                            <input type="text" id="guardian-student2" name="guardian-student2" placeholder="optional"><br><br>
+                            <label for="guardian-student3">Name</label>
+                            <input type="text" id="guardian-student3" name="guardian-student3" placeholder="optional"><br><br>
+                        
                         </form>
                     </div>
                     <div class="modal-footer">
