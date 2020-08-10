@@ -14,7 +14,7 @@
 
 body {
     display: grid;
-    grid-template-columns: 1fr 8fr 1fr;
+    grid-template-columns: 1fr 18fr 1fr;
     grid-template-rows: 1fr;
     /*TODO: get background coolor to change*/
 }
