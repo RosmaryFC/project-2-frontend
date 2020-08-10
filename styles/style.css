@@ -1,5 +1,4 @@
 * {
-    border: 2px solid gold;
 }
 
 :root {
@@ -117,6 +116,8 @@ main {
     .logo {
         width: 30%
     }
+
+    
 
 }
 
