@@ -2,10 +2,21 @@
     border: 2px solid gold;
 }
 
+:root {
+    --canva-yellow: #F8CF2C;
+    --canva-royal-red: #D01110;
+    --canva-red: #970C10;
+    --canva-slate: #BFCAD0;
+    --canva-cool-gray: #474440;
+    --logo-yellow:  #FCFF26 ;
+    --logo-red: #E02328;
+}
+
 body {
     display: grid;
     grid-template-columns: 1fr 8fr 1fr;
     grid-template-rows: 1fr;
+    /*TODO: get background coolor to change*/
 }
 
 main {
@@ -15,34 +26,61 @@ main {
     grid-template-rows: 2fr 1fr 6fr 1fr;
 }
 
+
+
 /*-----HEADER-------*/
 
 .bar-logo-companyname {
-    border: 2px solid red;
     grid-row-start: 1;
-
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+    
 }
 
 .logo{
     width: 15%;
 }
+
+.companyname {
+    font-size: 1.8em;
+    color: white;
+    font-weight: bold;
+}
 /*------TABS------*/
 
 
-.bar-studentparent {
-    border: 2px solid green;
+.bar-studentguardian {
+    border-top: 4px solid white;
+    border-bottom:4px solid black;
     grid-row-start: 2;
-
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--logo-red);
 }
+
+#btn-students, #btn-guardians, #btn-student-create, #btn-guardian-create {
+    background-color: var(--logo-yellow);
+    font-weight: bold;
+    color: black
+}
+
 
 /*------TABLE------*/
 
-.table-list-studentparent {
-    border: 2px solid blue;
+.table-list-studentguardian {
     grid-row-start: 3;
     display:flex;
     flex-direction: column;
-    min-height: 500px;
+    border: 2px solid black
+}
+
+.list-students-entries th, .list-guardians-entries th{
+    text-align: center;
+
 }
 
 /*------FOOTER------*/
@@ -50,9 +88,42 @@ main {
 .bar-footer {
     border: 2px solid purple;
     grid-row-start: 4;
+    background-color: black;
+}
+
+
+
+@media only screen and (max-width:960px) {
+    .bar-logo-companyname {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 250px;
+    }
+
+    .logo {
+        width: 20%
+    }
+
+    .companyname {
+        text-align: center;
+    }
+}
+
+
+
+@media only screen and (max-width: 640px) {
+
+    .logo {
+        width: 30%
+    }
 
 }
 
+
+@media only screen and (max-width: 375px) {
+
+}
 
 
 

@@ -33,56 +33,54 @@ const populateStudentTable = async () => {
     });
     const data = await response.json();
     console.log('data: ',data);
+
+
+    const $tableItems = $('<table>').attr('class','table-students');
+    $tableItems.attr('style','width:100%');
+    $table.append($tableItems);
     
     //Create ul where entries will be appended to
-    const $ul = $('<ul>').attr('class','list-students-entries');
-    $table.append($ul);
+    const $tableHeaders = $('<tr>').attr('class','list-students-entries');
+    $tableItems.append($tableHeaders);
 
-    //create li for KEYS HEADER and append to ul
-    const $liStudentsHeader = $('<li>').attr('class','listitem-studentkeys-holder');
-    $ul.append($liStudentsHeader);
-
-    //create ul for KEYS and append to liStudentsHeader
-    const $ulStudentKeys = $('<ul>').attr('class','list-student-entry-keys');
-    $liStudentsHeader.append($ulStudentKeys)
-
-    //create li KEYS and append to ulStudentEntries
-    const $liNameKey = $('<li>').text('NAME');
-    const $liAgeKey = $('<li>').text('AGE');
-    const $liRankKey = $('<li>').text('RANK');
-    const $liMonthlyFeeKey = $('<li>').text('MONTHLY FEE');
-    const $liDueDateKey = $('<li>').text('MONTHLY DUE DAY');
-    $ulStudentKeys.append($liNameKey);
-    $ulStudentKeys.append($liAgeKey);
-    $ulStudentKeys.append($liRankKey);
-    $ulStudentKeys.append($liMonthlyFeeKey);
-    $ulStudentKeys.append($liDueDateKey);
+    const $thDropDown = $('<th>').attr('class', 'list-drop-down').text("MENU")
+    const $thName = $('<th>').attr('class', 'list-students-names').text('NAME');
+    const $thAge = $('<th>').attr('class', 'list-students-ages').text('AGE');
+    const $thRank = $('<th>').attr('class', 'list-students-ranks').text('RANK');
+    const $thMonthlyFee = $('<th>').attr('class', 'list-students-fee').text('MONTHLY FEE')
+    const $thDueDay = $('<th>').attr('class', 'list-students-due').text('MONTHLY DUE DAY')
+    $tableHeaders.append($thDropDown)
+    $tableHeaders.append($thName)
+    $tableHeaders.append($thAge)
+    $tableHeaders.append($thRank)
+    $tableHeaders.append($thMonthlyFee)
+    $tableHeaders.append($thDueDay)
 
 
     //POPULATE TABLE WITH RETRIEVED DATA
     data.forEach((student) => {
         console.log('student: ',student)
-        const $liEntry = $('<li>')
-        $ul.append($liEntry)
+        // const $liEntry = $('<li>')
+        // $tableHeaders.append($liEntry)
 
-        const $ulEntry = $('<ul>')
-        $liEntry.append($ulEntry)
+        const $trEntry = $('<tr>')
+        $tableItems.append($trEntry)
 
         //append a menu from bootstrap with edit button and delete button
-        const $liDropdown = createDropdownMenu(student);
-        //append menu to ulEntry
-        $ulEntry.append($liDropdown); 
+        const $dropDown = createDropdownMenu(student);
+        //append menu to trEntry
+        $trEntry.append($dropDown); 
 
-        const $liNameEntry = $('<li>').text(`${student.firstName} ${student.lastName}`);
-        const $liAgeEntry = $('<li>').text(getAge(student.dateOfBirth));
-        const $liRankEntry = $('<li>').text(student.rank);
-        const $liMonthlyFeeEntry = $('<li>').text(student.billing.monthlyFee);
-        const $liDueDateEntry = $('<li>').text(student.billing.monthlyDueDate);
-        $ulEntry.append($liNameEntry);
-        $ulEntry.append($liAgeEntry);
-        $ulEntry.append($liRankEntry);
-        $ulEntry.append($liMonthlyFeeEntry);
-        $ulEntry.append($liDueDateEntry);
+        const $liNameEntry = $('<td>').text(`${student.firstName} ${student.lastName}`);
+        const $liAgeEntry = $('<td>').text(getAge(student.dateOfBirth));
+        const $liRankEntry = $('<td>').text(student.rank);
+        const $liMonthlyFeeEntry = $('<td>').text(student.billing.monthlyFee);
+        const $liDueDateEntry = $('<td>').text(student.billing.monthlyDueDate);
+        $trEntry.append($liNameEntry);
+        $trEntry.append($liAgeEntry);
+        $trEntry.append($liRankEntry);
+        $trEntry.append($liMonthlyFeeEntry);
+        $trEntry.append($liDueDateEntry);
     });
 }
 
@@ -99,53 +97,48 @@ const populateGuardianTable = async () => {
     const response = await fetch(`${URL}/guardians`);
     const data = await response.json();
     console.log('data: ',data);
-    
-    //Create ul where entries will be appended to
-    const $ul = $('<ul>').attr('class','list-guardians-entries');
-    $table.append($ul);
 
-    //create li for KEYS HEADER and append to ul
-    const $liGuardiansHeader = $('<li>').attr('class','listitem-guardiankeys-holder');
-    $ul.append($liGuardiansHeader);
+    const $tableItems = $('<table>').attr('class','table-guardians');
+    $tableItems.attr('style','width:100%');
+    $table.append($tableItems);
 
-    //create ul for KEYS and append to liGuardiansHeader
-    const $ulGuardianKeys = $('<ul>').attr('class','list-guardian-entry-keys');
-    $liGuardiansHeader.append($ulGuardianKeys)
+    //Create tr where entries will be appended to
+    const $tableHeaders = $('<tr>').attr('class','list-guardians-entries');
+    $tableItems.append($tableHeaders);
 
-    //create li KEYS and append to ulGuardianEntries
-    const $liNameKey = $('<li>').text('NAME');
-    const $liNumberKey = $('<li>').text('NUMBER');
-    const $liEmailKey = $('<li>').text('EMAIL');
-    const $liAddressKey = $('<li>').text('ADDRESS');
-    $ulGuardianKeys.append($liNameKey);
-    $ulGuardianKeys.append($liNumberKey);
-    $ulGuardianKeys.append($liEmailKey);
-    $ulGuardianKeys.append($liAddressKey);
+    const $thDropDown = $('<th>').attr('class', 'list-drop-down').text("MENU")
+    const $thName = $('<th>').attr('class', 'list-guardians-names').text('NAME')
+    const $thNumber = $('<th>').attr('class', 'list-guardians-numbers').text('NUMBER')
+    const $thEmail = $('<th>').attr('class', 'list-guardians-emails').text('EMAIL')
+    const $thAddress = $('<th>').attr('class', 'list-guardians-addresses').text('ADDRESS')
+    $tableHeaders.append($thDropDown)
+    $tableHeaders.append($thName)
+    $tableHeaders.append($thNumber)
+    $tableHeaders.append($thEmail)
+    $tableHeaders.append($thAddress)
 
 
     //POPULATE TABLE WITH RETRIEVED DATA
     data.forEach((guardian) => {
         console.log('guardian: ',guardian);
-        const $liEntry = $('<li>');
-        $ul.append($liEntry);
 
-        const $ulEntry = $('<ul>');
-        $liEntry.append($ulEntry);
+        const $trEntry = $('<tr>');
+        $tableItems.append($trEntry);
 
         //append a menu from bootstrap with edit button and delete button
-        const $liDropdown = createDropdownMenu(guardian);
-        //append menu to ulEntry
-        $ulEntry.append($liDropdown);        
+        const $dropDown = createDropdownMenu(guardian);
+        //append menu to tdEntry
+        $trEntry.append($dropDown);        
         
 
-        const $liNameEntry = $('<li>').text(`${guardian.firstName} ${guardian.lastName}`);
-        const $liNumberEntry = $('<li>').text(getAge(guardian.contactInfo.phoneNumber));
-        const $liEmailEntry = $('<li>').text(guardian.contactInfo.email);
-        const $liAddressEntry = $('<li>').text(guardian.contactInfo.address);
-        $ulEntry.append($liNameEntry);
-        $ulEntry.append($liNumberEntry);
-        $ulEntry.append($liEmailEntry);
-        $ulEntry.append($liAddressEntry);
+        const $liNameEntry = $('<td>').text(`${guardian.firstName} ${guardian.lastName}`);
+        const $liNumberEntry = $('<td>').text(getAge(guardian.contactInfo.phoneNumber));
+        const $liEmailEntry = $('<td>').text(guardian.contactInfo.email);
+        const $liAddressEntry = $('<td>').text(guardian.contactInfo.address);
+        $trEntry.append($liNameEntry);
+        $trEntry.append($liNumberEntry);
+        $trEntry.append($liEmailEntry);
+        $trEntry.append($liAddressEntry);
     });
 }
 
@@ -156,7 +149,7 @@ const populateGuardianTable = async () => {
 
 //create a menu from bootstrap with edit button and delete button
 function createDropdownMenu (userObject) {
-    const $liDropdown = $('<li>');
+    const $liDropdown = $('<td>');
 
     const $divDropdown = $('<div>').attr('class',"dropdown");
     $liDropdown.append($divDropdown);
@@ -238,7 +231,6 @@ async function deleteUser(userObject) {
 
 
 //---------EDIT USER----------------
-//TODO: write logic for edit user
 function editUser(userObject) {
     debugger;
     //checks whether student or guardian
@@ -361,81 +353,8 @@ function editUser(userObject) {
 
 }
 
-//TODO: write logic for update student
-function updateStudent(userObject, route) {
-    //TODO: write logic for edit user
-    console.log('logic for edit student goes here');
-    //populate modal with student information
-    //user edits student info
-    //on save, the object gets updated.
-
-    createModal(userObject._id, route);
-
-}
-
-//TODO: write logic for update guardian
-function updateGuardian(userObject, route) {
-    console.log('logic for edit guardian goes here')
-
-    createModal(userObject._id, route);
-}
-
-
-function createModal(id, route){
-    const $modalDivMain = $('<div>').attr('id', id);
-    $modalDivMain.attr('class', 'modal fade');
-    $modalDivMain.attr('tabindex','-1');
-    $modalDivMain.attr('aria-labeledby', `${id}ModalLabel`);
-    $modalDivMain.attr('aria-hidden','true');
-
-    const $modalDivDialog = $('<div>').attr('class', 'modal-dialog');
-    $modalDivMain.append($modalDivDialog);
-    
-    const $modalDivContent = $('<div>').attr('class','modal-content');
-    $modalDivDialog.append($modalDivContent);
-
-    const $modalDivHeader = $('<div>').attr('class','modal-header');
-    $modalDivContent.append($modalDivHeader)
-
-    const $modalHeaderFive = $('<h5>').attr('class', 'modal-title');
-    $modalHeaderFive.attr('id', `${id}ModalLabel`);
-    $modalHeaderFive.text(`Update ${route}`);
-    $modalDivHeader.append($modalHeaderFive);
-
-    const $modalButtonExit = $('button>').attr('type','button');
-    $modalButtonExit.attr('class','close');
-    $modalButtonExit.attr('data-dismiss','modal');
-    $modalButtonExit.attr('aria-label', "Close");
-    $modalDivHeader.append($modalButtonExit);
-
-    const $modalButtonExitSpan = $('<span>').attr('aria-hidden','true')
-    $modalButtonExitSpan.text('&times;');
-    $modalButtonExit.append($modalButtonExitSpan);
-
-    const $modalDivBody = $('<div>').attr('class','modal-body');
-    $modalDivBody.attr(`modal-${id}-body`);
-    $modalDivContent.append($modalDivBody);
-
-    //TODO: ADD CONTENT TO DIV BODY
-
-    const $modalDivFooter = $('<div>').attr('class','modal-footer');
-    $modalDivContent.append($modalDivFooter);
-
-    const $modalDivFooterButtonClose = $('<button>').attr('type','button');
-    $modalDivFooterButtonClose.attr('class','btn btn-secondary');
-    $modalDivFooterButtonClose.attr('data-dismiss','modal');
-    $modalDivFooterButtonClose.text('Close');
-    $modalDivFooter.append($modalDivFooterButtonClose);
-
-    const $modalDivFooterButtonSave = $('<button>').attr('type','button');
-    $modalDivFooterButtonSave.attr('class','btn btn-primary');
-    $modalDivFooterButtonSave.attr('id',`btn-${id}-edit-save`);
-    $modalDivFooter.append($modalDivFooterButtonSave);    
-}
-
 
 //----------CREATE USER----------------
-
 
 async function createStudent() {
     //bring in variables from form
