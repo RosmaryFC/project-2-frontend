@@ -1,6 +1,7 @@
 ///////////////////////
+
 //SETS URL SO IT USES DEPLOYED API URL IF IT EXISTS, LOCALHOST IF IT DOESN'T
-const deployedURL = "https://project-2-backend.herokuapp.com";
+const deployedURL = null;
 const URL = deployedURL ? deployedURL : "http://localhost:3000";
 
 ///////////////////////
@@ -158,48 +159,53 @@ function createDropdownMenu (userObject) {
     const $liDropdown = $('<li>');
 
     const $divDropdown = $('<div>').attr('class',"dropdown");
-        $liDropdown.append($divDropdown);
-        const $btnDropdown = $('<button>').attr('class',"btn btn-secondary dropdown-toggle")
-        $btnDropdown.attr('type', "button");
-        $btnDropdown.attr('id',"dropdownMenuButton")
-        $btnDropdown.attr('data-toggle', "dropdown")
-        $btnDropdown.attr('aria-haspopup', "true")
-        $btnDropdown.attr('aria-expanded', "false")
-        // const $hamburgerIcon = $('<i>').attr('class',"fas fa-bars");
-        //TODO: figure out how to get hamburger icon as text for dropdown
-        $btnDropdown.text('');
-        $divDropdown.append($btnDropdown);
-        const $divOptions = $('<div>').attr('class',"dropdown-menu");
-        $divOptions.attr('aria-labelledby',"dropdownMenuButton");
-        $divDropdown.append($divOptions);
+    $liDropdown.append($divDropdown);
+    const $btnDropdown = $('<button>').attr('class',"btn btn-secondary dropdown-toggle")
+    $btnDropdown.attr('type', "button");
+    $btnDropdown.attr('id',"dropdownMenuButton")
+    $btnDropdown.attr('data-toggle', "dropdown")
+    $btnDropdown.attr('aria-haspopup', "true")
+    $btnDropdown.attr('aria-expanded', "false")
+    // const $hamburgerIcon = $('<i>').attr('class',"fas fa-bars");
+    //TODO: figure out how to get hamburger icon as text for dropdown
+    $btnDropdown.text('');
+    $divDropdown.append($btnDropdown);
+    const $divOptions = $('<div>').attr('class',"dropdown-menu");
+    $divOptions.attr('aria-labelledby',"dropdownMenuButton");
+    $divDropdown.append($divOptions);
 
-        //create items and set on clicks
-        const $aEdit = $('<a>').attr('class',"dropdown-item");
-        $aEdit.attr('href',"#");
-        $aEdit.text("Edit");
-        //on Click to edit each item
-        $aEdit.on('click', (event) => {
-            console.log('edit')
-            console.log('id:' ,userObject);
-            editUser(userObject)
-        })
+    //create items and set on clicks
+    const $aEdit = $('<button>').attr('class',"dropdown-item");
+    $aEdit.attr('data-toggle', 'modal');
+    $aEdit.attr('data-target', '#edit-modal');
+    $aEdit.text("Edit");
+    //on Click to edit each item
+    $aEdit.on('click', (event) => {
+        debugger;
+        console.log('edit')
 
-        //create items and set on clicks
-        const $aDelete = $('<a>').attr('class',"dropdown-item");
-        $aDelete.attr('href',"#");
-        $aDelete.text('Delete');
-        //On Click to delete each item
-        $aDelete.on('click', (event) => {
-            console.log('delete')
-            console.log('id:', userObject);
-            deleteUser(userObject);
-        })
+        editUser(userObject)
+    })
 
-        $divOptions.append($aEdit);
-        $divOptions.append($aDelete);
+    //create items and set on clicks
+    const $aDelete = $('<button>').attr('class',"dropdown-item");
+    $aDelete.text('Delete');
+    //On Click to delete each item
+    $aDelete.on('click', (event) => {
+        debugger;
+        console.log('delete')
+        console.log('user object:', userObject);
+        deleteUser(userObject);
+    })
+
+    $divOptions.append($aEdit);
+    $divOptions.append($aDelete);
         
     return $liDropdown;
 }
+
+
+//--------DELETE USER--------------
 
 //deletes either student or guardian
 async function deleteUser(userObject) {
@@ -230,65 +236,207 @@ async function deleteUser(userObject) {
     }
 }
 
+
+//---------EDIT USER----------------
 //TODO: write logic for edit user
-async function editUser(userObject) {
-    console.log('userObject in edit: ', userObject)
-
+function editUser(userObject) {
+    debugger;
     //checks whether student or guardian
-    const route = (userObject) => {
-        if (userObject.hasOwnProperty('students') ){
-            return "guardians"
+    const isGaurdian = () => {
+        if (userObject.hasOwnProperty('students')) {
+            return true
         }else {
-            return "students"
+            return false
         }
     }
 
-    const updatedUser = () => {
-        if(route == 'students'){
-            return updateStudent(userObject)
-        }else {
-            return updateGuardian(userObject)
+    const initalizeModal = () => {
+        const {
+            firstName,
+            lastName,
+            dateOfBirth,
+            contactInfo,
+            // different based on type, may be undefined.
+            rank,
+        } = userObject;
+        const {
+            phoneNumber,
+            email,
+            address,
+        } = contactInfo;
+        // personal info
+        const $firstNameInput = $('#first-name').val(firstName)
+        const $lastNameInput = $('#last-name').val(lastName)
+        
+        // contact info
+        const $phoneNumberInput = $('#edit-phone-number').val(phoneNumber)
+        const $emailInput = $('#edit-email').val(email)
+        const $addressInput = $('#edit-address').val(address)
+
+
+        if (isGaurdian()) {
+            const $modalTitle = $('#edit-modal-title').html('Edit Guardian')
+
+            const $studentRankInput = $('#edit-student-rank').hide()
+            const $studentRankLabel = $('label[for="edit-student-rank"]').hide()
+            const $studentBirthInput = $('#date-of-birth').hide()
+            const $studentBirthLabel = $('label[for="date-of-birth"]').hide()
+        } else {
+            const $modalTitle = $('#edit-modal-title').html('Edit Student')
+
+            const $studentRankInput = $('#edit-student-rank').val(rank).show()
+            const $dateOfBirthInput = $('#date-of-birth').val(dateOfBirth).show()
+            const $studentRankLabel = $('label[for="edit-student-rank"]').show()
+            const $studentBirthLabel = $('label[for="date-of-birth"]').show()
         }
-    }
-
-    console.log(updatedUser)
-
-    // //edit in database
-    // const userId = userObject._id;
-    // const userURI = `${URL}/${route(userObject)}/${userId}`;
-    // console.log('userURI',userURI)
-    // //API CALL USING ASYNC/AWAIT
-    // const response = await fetch(`${URL}/${route(userObject)}/${userId}`, {
-    //     method: "put",
-    //     headers: {
-    //         "Content-Type":"application/json"
-    //     },
-    //     body: JSON.stringify(updatedUser)
-    // })
+    };
 
 
-    // //repopulates student or guardian table
-    // $table.empty()
-    // if(route == 'guardians') {
-    //     populateGuardianTable()
-    // }else {
-    //     populateStudentTable()
-    // }
+    // create on click listener for `update-user`
+    // when clicked if userObject is student
+        // pull off student input values and submit using api
+        // else pull off gardian alues and submit using api
+    const $btnUpdateUser = $('#update-user');
+
+    //To prevent listener from firing off multiple times, event listener must be turned off
+    // https://stackoverflow.com/a/26602984
+    $('#update-user').off('click')
+    $btnUpdateUser.on('click', (event) => {
+        let updateUserRoute = `${URL}/`
+        const firstName = $('#first-name').val()
+        const lastName = $('#last-name').val()
+        
+        // contact info
+        const phoneNumber = $('#edit-phone-number').val()
+        const email = $('#edit-email').val()
+        const address = $('#edit-address').val()
+
+
+        const updatedObj = {
+            firstName,
+            lastName,
+            contactInfo: {
+                phoneNumber,
+                email,
+                address
+            }
+        }
+
+        if (isGaurdian()) {
+            updateUserRoute += `guardians/${userObject._id}`
+
+        } else {
+            updateUserRoute += `students/${userObject._id}`
+            studentRank = $('#edit-student-rank').val()
+            dateOfBirth = $('#date-of-birth').val()
+
+            updatedObj.rank = studentRank;
+            updatedObj.dateOfBirth = dateOfBirth;
+
+        }
+        
+        fetch(updateUserRoute, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedObj)
+        }).catch((err) => {
+            alert(`an error has occured adding user ${err}`)
+        });
+
+        //repopulates student or guardian table
+        $table.empty()
+        if(isGaurdian()) {
+            populateGuardianTable()
+        }else {
+            populateStudentTable()
+        }
+
+        const $modal = $('#edit-modal')
+        $modal.modal('hide');
+    })
+
+    initalizeModal()
+
 }
 
 //TODO: write logic for update student
-function updateStudent(userObject) {
+function updateStudent(userObject, route) {
     //TODO: write logic for edit user
-    console.log('logic for edit student goes here')
+    console.log('logic for edit student goes here');
+    //populate modal with student information
+    //user edits student info
+    //on save, the object gets updated.
+
+    createModal(userObject._id, route);
+
 }
 
 //TODO: write logic for update guardian
-function updateGuardian(userObject) {
+function updateGuardian(userObject, route) {
     console.log('logic for edit guardian goes here')
 
+    createModal(userObject._id, route);
 }
 
-//TODO: write logic for create student 
+
+function createModal(id, route){
+    const $modalDivMain = $('<div>').attr('id', id);
+    $modalDivMain.attr('class', 'modal fade');
+    $modalDivMain.attr('tabindex','-1');
+    $modalDivMain.attr('aria-labeledby', `${id}ModalLabel`);
+    $modalDivMain.attr('aria-hidden','true');
+
+    const $modalDivDialog = $('<div>').attr('class', 'modal-dialog');
+    $modalDivMain.append($modalDivDialog);
+    
+    const $modalDivContent = $('<div>').attr('class','modal-content');
+    $modalDivDialog.append($modalDivContent);
+
+    const $modalDivHeader = $('<div>').attr('class','modal-header');
+    $modalDivContent.append($modalDivHeader)
+
+    const $modalHeaderFive = $('<h5>').attr('class', 'modal-title');
+    $modalHeaderFive.attr('id', `${id}ModalLabel`);
+    $modalHeaderFive.text(`Update ${route}`);
+    $modalDivHeader.append($modalHeaderFive);
+
+    const $modalButtonExit = $('button>').attr('type','button');
+    $modalButtonExit.attr('class','close');
+    $modalButtonExit.attr('data-dismiss','modal');
+    $modalButtonExit.attr('aria-label', "Close");
+    $modalDivHeader.append($modalButtonExit);
+
+    const $modalButtonExitSpan = $('<span>').attr('aria-hidden','true')
+    $modalButtonExitSpan.text('&times;');
+    $modalButtonExit.append($modalButtonExitSpan);
+
+    const $modalDivBody = $('<div>').attr('class','modal-body');
+    $modalDivBody.attr(`modal-${id}-body`);
+    $modalDivContent.append($modalDivBody);
+
+    //TODO: ADD CONTENT TO DIV BODY
+
+    const $modalDivFooter = $('<div>').attr('class','modal-footer');
+    $modalDivContent.append($modalDivFooter);
+
+    const $modalDivFooterButtonClose = $('<button>').attr('type','button');
+    $modalDivFooterButtonClose.attr('class','btn btn-secondary');
+    $modalDivFooterButtonClose.attr('data-dismiss','modal');
+    $modalDivFooterButtonClose.text('Close');
+    $modalDivFooter.append($modalDivFooterButtonClose);
+
+    const $modalDivFooterButtonSave = $('<button>').attr('type','button');
+    $modalDivFooterButtonSave.attr('class','btn btn-primary');
+    $modalDivFooterButtonSave.attr('id',`btn-${id}-edit-save`);
+    $modalDivFooter.append($modalDivFooterButtonSave);    
+}
+
+
+//----------CREATE USER----------------
+
+
 async function createStudent() {
     //bring in variables from form
     const $firstName = $('#student-firstName');
@@ -349,8 +497,8 @@ async function createStudent() {
     populateStudentTable();
 
     //TODO: figure out how to close modal
-    const $modal = $('createStudentModal');
-    $modal.close()
+    // const $modal = $('createStudentModal');
+    // $modal.modal('hide');
 }
 
 
@@ -404,7 +552,6 @@ async function createGuardian() {
     // const $modal = $('createStudentModal');
     // $modal.close()
 }
-
 
 ////////////////////////////////
 // Main Application Logic

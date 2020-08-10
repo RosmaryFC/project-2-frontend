@@ -34,44 +34,43 @@
                 Create Student
             </button>
             
-            
             <!-- Modal -->
             <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="guardianModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="studentModalLabel">New Student</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="studentModalLabel">New Student</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modal-student-body">
+                            <form action="">
+                                <label for="student-firstName">First name:</label>
+                                <input type="text" id="student-firstName" name="student-firstName"><br><br>
+                                <label for="student-lastName">Last name:</label>
+                                <input type="text" id="student-lastName" name="student-lastName"><br><br>
+                                <label for="student-dateOfBirth">Date Of Birth</label>
+                                <input type="text" id="student-dateOfBirth" name="student-dateOfBirth" placeholder="MM/DD/YYYY"><br><br>
+                                <label for="student-rank">Rank</label>
+                                <input type="text" id="student-rank" name="student-rank"><br><br>
+                                <h5>ContactInfo</h5>
+                                <label for="student-PhoneNumber">PhoneNumber</label>
+                                <input type="text" id="student-PhoneNumber" name="student-PhoneNumber"><br><br>
+                                <label for="student-email">Email</label>
+                                <input type="text" id="student-email" name="student-email"><br><br>
+                                <label for="student-address">address</label>
+                                <input type="text" id="student-address" name="student-address"><br><br>
+                                <h5>Billing</h5>
+                                <label for="student-plan">Plan</label>
+                                <input type="text" id="student-plan" name="student-plan"><br><br>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btn-student-create-save">Save changes</button>
+                        </div>
                     </div>
-                    <div class="modal-body" id="modal-student-body">
-                        <form action="">
-                            <label for="student-firstName">First name:</label>
-                            <input type="text" id="student-firstName" name="student-firstName"><br><br>
-                            <label for="student-lastName">Last name:</label>
-                            <input type="text" id="student-lastName" name="student-lastName"><br><br>
-                            <label for="student-dateOfBirth">Date Of Birth</label>
-                            <input type="text" id="student-dateOfBirth" name="student-dateOfBirth" placeholder="MM/DD/YYYY"><br><br>
-                            <label for="student-rank">Rank</label>
-                            <input type="text" id="student-rank" name="student-rank"><br><br>
-                            <h5>ContactInfo</h5>
-                            <label for="student-PhoneNumber">PhoneNumber</label>
-                            <input type="text" id="student-PhoneNumber" name="student-PhoneNumber"><br><br>
-                            <label for="student-email">Email</label>
-                            <input type="text" id="student-email" name="student-email"><br><br>
-                            <label for="student-address">address</label>
-                            <input type="text" id="student-address" name="student-address"><br><br>
-                            <h5>Billing</h5>
-                            <label for="student-plan">Plan</label>
-                            <input type="text" id="student-plan" name="student-plan"><br><br>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btn-student-create-save">Save changes</button>
-                    </div>
-                </div>
                 </div>
             </div>
 
@@ -125,6 +124,44 @@
             
         </section>
         <footer class="bar-footer">footer</footer>
+        
+
+        <!-- Modal -->
+        <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="edit-modal-title" class="modal-title">Edit Student</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <label for="first-name">First name:</label>
+                            <input type="text" id="first-name" name="first-name"><br><br>
+                            <label for="last-name">Last name:</label>
+                            <input type="text" id="last-name" name="last-name"><br><br>
+                            <label for="date-of-birth">Date Of Birth</label>
+                            <input type="text" id="date-of-birth" name="date-of-birth" placeholder="MM/DD/YYYY"><br><br>
+                            <label for="edit-student-rank">Rank</label>
+                            <input type="text" id="edit-student-rank" name="edit-student-rank"><br><br>
+                            <h5>ContactInfo</h5>
+                            <label for="edit-phone-number">Phone Number</label>
+                            <input type="text" id="edit-phone-number" name="edit-phone-number"><br><br>
+                            <label for="edit-email">Email</label>
+                            <input type="text" id="edit-email" name="edit-email"><br><br>
+                            <label for="edit-address">address</label>
+                            <input type="text" id="edit-address" name="edit-address"><br><br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update-user">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 </html>
