@@ -32,7 +32,6 @@ const populateStudentTable = async () => {
         }
     });
     const data = await response.json();
-    console.log('data: ',data);
 
 
     const $tableItems = $('<table>').attr('class','table-students');
@@ -59,9 +58,6 @@ const populateStudentTable = async () => {
 
     //POPULATE TABLE WITH RETRIEVED DATA
     data.forEach((student) => {
-        console.log('student: ',student)
-        // const $liEntry = $('<li>')
-        // $tableHeaders.append($liEntry)
 
         const $trEntry = $('<tr>')
         $tableItems.append($trEntry)
@@ -96,7 +92,6 @@ const populateGuardianTable = async () => {
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}/guardians`);
     const data = await response.json();
-    console.log('data: ',data);
 
     const $tableItems = $('<table>').attr('class','table-guardians');
     $tableItems.attr('style','width:100%');
@@ -120,7 +115,6 @@ const populateGuardianTable = async () => {
 
     //POPULATE TABLE WITH RETRIEVED DATA
     data.forEach((guardian) => {
-        console.log('guardian: ',guardian);
 
         const $trEntry = $('<tr>');
         $tableItems.append($trEntry);
@@ -174,8 +168,6 @@ function createDropdownMenu (userObject) {
     $aEdit.text("Edit");
     //on Click to edit each item
     $aEdit.on('click', (event) => {
-        debugger;
-        console.log('edit')
 
         editUser(userObject)
     })
@@ -185,9 +177,6 @@ function createDropdownMenu (userObject) {
     $aDelete.text('Delete');
     //On Click to delete each item
     $aDelete.on('click', (event) => {
-        debugger;
-        console.log('delete')
-        console.log('user object:', userObject);
         deleteUser(userObject);
     })
 
@@ -214,7 +203,6 @@ async function deleteUser(userObject) {
     //delete from database
     const userId = userObject._id;
     const userURI = `${URL}/${route(userObject)}/${userId}`;
-    console.log('userURI',userURI)
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}/${route(userObject)}/${userId}`, {
         method: "delete"
@@ -400,7 +388,6 @@ async function createStudent() {
             currentBalance: 0 ,
         }
     }
-    console.log('NEW STUDENT: ', newStudent);
 
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}/students`, {
@@ -448,12 +435,10 @@ async function createGuardian() {
 //TODO: make sure students inputed are lowercase
     for(let i = 0; i < studentsInputs.length; i++){
         if(studentsInputs[i] != ''){
-            console.log('push student to object')
             newGuardian.students.push(studentsInputs[i]);
         }
     }
 
-    console.log('NEW Guardain: ', newGuardian);
 
     //API CALL USING ASYNC/AWAIT
     const response = await fetch(`${URL}/guardians`, {
@@ -485,11 +470,9 @@ populateStudentTable();
 //when guardian button is selected, table disappears and guardian info is displayed in a table
 //student button looks disabled and guardian button is active
 $btnGuardian.on('click', (event) => {
-    console.log('clicked guardian');
     populateGuardianTable();
 });
 $btnStudent.on('click', (event) => {
-    console.log('clicked student');
     populateStudentTable();
 });
 
@@ -498,6 +481,5 @@ $btnCreateStudentSave.on('click', (event) => {
 })
 
 $btnCreateGuardianSave.on('click', (event) => {
-    console.log('clicked createGuardian');
     createGuardian();
 })
